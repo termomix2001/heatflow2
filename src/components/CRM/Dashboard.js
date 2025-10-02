@@ -16,7 +16,7 @@ import {
   FaExclamationTriangle
 } from 'react-icons/fa';
 
-const Dashboard = ({ onEditLead }) => {
+const Dashboard = ({ onEditLead, isDarkMode = false }) => {
   const [stats, setStats] = useState({
     totalLeads: 0,
     activeLeads: 0,
@@ -128,7 +128,7 @@ const Dashboard = ({ onEditLead }) => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">CRM Dashboard</h1>
+          <h1 className={`text-3xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>CRM Dashboard</h1>
           <p className="text-gray-600">Přehled poptávek a výkonnosti obchodního týmu</p>
         </motion.div>
 
@@ -138,12 +138,12 @@ const Dashboard = ({ onEditLead }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-white rounded-xl shadow-lg p-6"
+            className={`rounded-xl shadow-lg p-6 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}
           >
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Celkem poptávek</p>
-                <p className="text-3xl font-bold text-gray-900">{stats.totalLeads}</p>
+                <p className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{stats.totalLeads}</p>
               </div>
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                 <FaUsers className="text-blue-600 text-xl" />
@@ -160,12 +160,12 @@ const Dashboard = ({ onEditLead }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white rounded-xl shadow-lg p-6"
+            className={`rounded-xl shadow-lg p-6 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}
           >
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Aktivní poptávky</p>
-                <p className="text-3xl font-bold text-gray-900">{stats.activeLeads}</p>
+                <p className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{stats.activeLeads}</p>
               </div>
               <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
                 <FaClock className="text-yellow-600 text-xl" />
@@ -182,12 +182,12 @@ const Dashboard = ({ onEditLead }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-white rounded-xl shadow-lg p-6"
+            className={`rounded-xl shadow-lg p-6 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}
           >
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Uzavřené obchody</p>
-                <p className="text-3xl font-bold text-gray-900">{stats.convertedLeads}</p>
+                <p className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{stats.convertedLeads}</p>
               </div>
               <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
                 <FaCheckCircle className="text-green-600 text-xl" />
@@ -204,12 +204,12 @@ const Dashboard = ({ onEditLead }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="bg-white rounded-xl shadow-lg p-6"
+            className={`rounded-xl shadow-lg p-6 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}
           >
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Měsíční tržby</p>
-                <p className="text-3xl font-bold text-gray-900">
+                <p className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                   {(stats.monthlyRevenue / 1000000).toFixed(1)}M Kč
                 </p>
               </div>
@@ -231,10 +231,10 @@ const Dashboard = ({ onEditLead }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="bg-white rounded-xl shadow-lg p-6"
+            className={`rounded-xl shadow-lg p-6 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}
           >
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-gray-900">Nejnovější poptávky</h2>
+              <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Nejnovější poptávky</h2>
               <button 
                 onClick={() => window.location.href = '/crm?tab=leads'}
                 className="text-primary-600 hover:text-primary-700 font-medium"
@@ -259,7 +259,7 @@ const Dashboard = ({ onEditLead }) => {
                       </span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">{lead.name}</h3>
+                      <h3 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{lead.name}</h3>
                       <p className="text-sm text-gray-600">{lead.company}</p>
                       <p className="text-sm text-gray-500">{lead.salesRep}</p>
                     </div>
@@ -267,7 +267,7 @@ const Dashboard = ({ onEditLead }) => {
                   
                   <div className="flex items-center space-x-4">
                     <div className="text-right">
-                      <p className="font-semibold text-gray-900">
+                      <p className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                         {lead.value.toLocaleString()} Kč
                       </p>
                       <p className="text-sm text-gray-500">{lead.date}</p>
@@ -311,10 +311,10 @@ const Dashboard = ({ onEditLead }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
-            className="bg-white rounded-xl shadow-lg p-6"
+            className={`rounded-xl shadow-lg p-6 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}
           >
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-gray-900">Výkonnost týmu</h2>
+              <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Výkonnost týmu</h2>
               <button className="text-primary-600 hover:text-primary-700 font-medium">
                 Detailní přehled
               </button>
@@ -330,7 +330,7 @@ const Dashboard = ({ onEditLead }) => {
                   className="p-4 bg-gray-50 rounded-lg"
                 >
                   <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-semibold text-gray-900">{sales.name}</h3>
+                    <h3 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{sales.name}</h3>
                     <span className="text-sm text-gray-500">
                       {sales.conversionRate}% konverze
                     </span>
@@ -338,7 +338,7 @@ const Dashboard = ({ onEditLead }) => {
                   
                   <div className="grid grid-cols-3 gap-4 mb-3">
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-gray-900">{sales.leads}</p>
+                      <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{sales.leads}</p>
                       <p className="text-sm text-gray-600">Poptávky</p>
                     </div>
                     <div className="text-center">

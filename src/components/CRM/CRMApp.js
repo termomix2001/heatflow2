@@ -86,23 +86,23 @@ const CRMApp = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
-        return <Dashboard onEditLead={handleEditLead} />;
+        return <Dashboard onEditLead={handleEditLead} isDarkMode={isDarkMode} />;
       case 'leads':
-        return <LeadsManagement onEditLead={handleEditLead} />;
+        return <LeadsManagement onEditLead={handleEditLead} isDarkMode={isDarkMode} />;
       case 'billing':
-        return <Billing />;
+        return <Billing isDarkMode={isDarkMode} />;
       case 'performance':
-        return <SalesPerformance />;
+        return <SalesPerformance isDarkMode={isDarkMode} />;
       case 'team':
-        return <div className="p-6"><h2 className="text-2xl font-bold">Tým</h2><p>Zde bude správa týmu</p></div>;
+        return <div className={`p-6 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}><h2 className="text-2xl font-bold">Tým</h2><p>Zde bude správa týmu</p></div>;
       case 'calendar':
-        return <CalendarComponent />;
+        return <CalendarComponent isDarkMode={isDarkMode} />;
       case 'edit-lead':
-        return <EditLead onBack={handleBackToLeads} />;
+        return <EditLead onBack={handleBackToLeads} isDarkMode={isDarkMode} />;
       case 'settings':
-        return <div className="p-6"><h2 className="text-2xl font-bold">Nastavení</h2><p>Zde budou nastavení</p></div>;
+        return <div className={`p-6 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}><h2 className="text-2xl font-bold">Nastavení</h2><p>Zde budou nastavení</p></div>;
       default:
-        return <Dashboard />;
+        return <Dashboard isDarkMode={isDarkMode} />;
     }
   };
 

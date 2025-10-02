@@ -14,7 +14,7 @@ import {
 } from 'react-icons/fa';
 import InvoiceHTML from './InvoiceHTML';
 
-const Billing = () => {
+const Billing = ({ isDarkMode = false }) => {
   const [leads, setLeads] = useState([]);
   const [filteredLeads, setFilteredLeads] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -114,7 +114,7 @@ const Billing = () => {
             <FaFileInvoice className="text-primary-600 text-xl" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Fakturace</h1>
+            <h1 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Fakturace</h1>
             <p className="text-gray-600">Poptávky připravené k fakturací</p>
           </div>
         </motion.div>
@@ -125,12 +125,12 @@ const Billing = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-white rounded-lg shadow-sm p-6 border border-gray-200"
+            className={`rounded-lg shadow-sm p-6 border ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}
           >
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Celkem poptávek</p>
-                <p className="text-2xl font-bold text-gray-900">{leads.length}</p>
+                <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{leads.length}</p>
               </div>
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                 <FaFileInvoice className="text-blue-600" />
@@ -142,12 +142,12 @@ const Billing = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white rounded-lg shadow-sm p-6 border border-gray-200"
+            className={`rounded-lg shadow-sm p-6 border ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}
           >
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Celková hodnota</p>
-                <p className="text-2xl font-bold text-gray-900">
+                <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                   {leads.reduce((sum, lead) => sum + lead.value, 0).toLocaleString('cs-CZ')} Kč
                 </p>
               </div>
@@ -161,12 +161,12 @@ const Billing = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-white rounded-lg shadow-sm p-6 border border-gray-200"
+            className={`rounded-lg shadow-sm p-6 border ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}
           >
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Průměrná hodnota</p>
-                <p className="text-2xl font-bold text-gray-900">
+                <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                   {Math.round(leads.reduce((sum, lead) => sum + lead.value, 0) / leads.length).toLocaleString('cs-CZ')} Kč
                 </p>
               </div>
@@ -183,7 +183,7 @@ const Billing = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="bg-white rounded-lg shadow-sm p-6 mb-6 border border-gray-200"
+        className={`rounded-lg shadow-sm p-6 mb-6 border ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}
       >
         <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-1">
@@ -215,7 +215,7 @@ const Billing = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 * index }}
-            className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
+            className={`rounded-lg shadow-sm border overflow-hidden ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}
           >
             <div className="p-6">
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
@@ -225,7 +225,7 @@ const Billing = () => {
                       <FaUser className="text-primary-600" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-gray-900">{lead.name}</h3>
+                      <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{lead.name}</h3>
                       <p className="text-gray-600">{lead.company}</p>
                       <div className="flex flex-wrap items-center gap-4 mt-2 text-sm text-gray-500">
                         <div className="flex items-center space-x-1">
@@ -247,7 +247,7 @@ const Billing = () => {
 
                 <div className="mt-4 lg:mt-0 lg:ml-6">
                   <div className="text-right">
-                    <p className="text-2xl font-bold text-gray-900">
+                    <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                       {lead.value.toLocaleString('cs-CZ')} Kč
                     </p>
                     <p className="text-sm text-gray-500">Hodnota poptávky</p>
@@ -297,7 +297,7 @@ const Billing = () => {
           className="text-center py-12"
         >
           <FaFileInvoice className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Žádné poptávky k fakturací</h3>
+          <h3 className={`text-lg font-medium mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Žádné poptávky k fakturací</h3>
           <p className="text-gray-500">
             {searchTerm ? 'Nebyly nalezeny žádné poptávky odpovídající vašemu vyhledávání.' : 'Momentálně nejsou žádné poptávky ve stavu "Nabídka".'}
           </p>
