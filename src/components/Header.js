@@ -86,8 +86,16 @@ const Header = () => {
               ))}
             </div>
 
-            {/* CTA Button */}
-            <div className="hidden lg:block">
+            {/* CTA Buttons */}
+            <div className="hidden lg:flex items-center space-x-4">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => window.location.href = '/crm'}
+                className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors duration-300 font-medium"
+              >
+                Přihlásit
+              </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -140,8 +148,23 @@ const Header = () => {
                 opacity: isMenuOpen ? 1 : 0,
                 y: isMenuOpen ? 0 : 20 
               }}
+              transition={{ delay: 0.4 }}
+              onClick={() => {
+                window.location.href = '/crm';
+                setIsMenuOpen(false);
+              }}
+              className="bg-gray-100 text-gray-700 w-full py-3 px-4 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+            >
+              Přihlásit
+            </motion.button>
+            <motion.button
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ 
+                opacity: isMenuOpen ? 1 : 0,
+                y: isMenuOpen ? 0 : 20 
+              }}
               transition={{ delay: 0.5 }}
-              className="btn-primary w-full mt-4"
+              className="btn-primary w-full mt-2"
             >
               Získat nabídku
             </motion.button>
