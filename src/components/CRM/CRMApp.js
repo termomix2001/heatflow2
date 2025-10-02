@@ -10,13 +10,15 @@ import {
   FaUser,
   FaCog,
   FaCalendarAlt,
-  FaEdit
+  FaEdit,
+  FaFileInvoice
 } from 'react-icons/fa';
 import Dashboard from './Dashboard';
 import LeadsManagement from './LeadsManagement';
 import SalesPerformance from './SalesPerformance';
 import CalendarComponent from './Calendar';
 import EditLead from './EditLead';
+import Billing from './Billing';
 import Login from './Login';
 
 const CRMApp = () => {
@@ -53,6 +55,7 @@ const CRMApp = () => {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: FaHome },
     { id: 'leads', label: 'Poptávky', icon: FaUsers },
+    { id: 'billing', label: 'Fakturace', icon: FaFileInvoice },
     { id: 'performance', label: 'Výkonnost', icon: FaChartLine },
     { id: 'team', label: 'Tým', icon: FaUsers },
     { id: 'calendar', label: 'Kalendář', icon: FaCalendarAlt },
@@ -66,6 +69,8 @@ const CRMApp = () => {
         return <Dashboard onEditLead={handleEditLead} />;
       case 'leads':
         return <LeadsManagement onEditLead={handleEditLead} />;
+      case 'billing':
+        return <Billing />;
       case 'performance':
         return <SalesPerformance />;
       case 'team':
