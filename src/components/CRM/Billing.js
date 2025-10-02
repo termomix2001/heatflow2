@@ -12,13 +12,14 @@ import {
   FaEnvelope,
   FaMapMarkerAlt
 } from 'react-icons/fa';
-import { generateInvoicePDF } from '../../utils/pdfGenerator';
+import InvoiceHTML from './InvoiceHTML';
 
 const Billing = () => {
   const [leads, setLeads] = useState([]);
   const [filteredLeads, setFilteredLeads] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedLead, setSelectedLead] = useState(null);
 
   // Simulace dat - poptávky ve stavu "Nabídka"
   useEffect(() => {
@@ -81,13 +82,8 @@ const Billing = () => {
 
   // Generování PDF faktury
   const generateInvoice = (lead) => {
-    try {
-      // Generování skutečné PDF faktury
-      generateInvoicePDF(lead);
-    } catch (error) {
-      console.error('Chyba při generování PDF:', error);
-      alert('Došlo k chybě při generování PDF faktury. Zkuste to prosím znovu.');
-    }
+    // Zobrazí HTML fakturu v modalu nebo novém okně
+    setSelectedLead(lead);
   };
 
   // Zobrazení detailu poptávky
@@ -306,6 +302,53 @@ const Billing = () => {
             {searchTerm ? 'Nebyly nalezeny žádné poptávky odpovídající vašemu vyhledávání.' : 'Momentálně nejsou žádné poptávky ve stavu "Nabídka".'}
           </p>
         </motion.div>
+      )}
+
+      {/* Modal pro zobrazení faktury */}
+      {selectedLead && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          zIndex: 1000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '20px'
+        }}>
+          <div style={{
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            maxWidth: '90%',
+            maxHeight: '90%',
+            overflow: 'auto',
+            position: 'relative'
+          }}>
+            <button
+              onClick={() => setSelectedLead(null)}
+              style={{
+                position: 'absolute',
+                top: '10px',
+                right: '10px',
+                background: '#F97316',
+                color: 'white',
+                border: 'none',
+                borderRadius: '50%',
+                width: '30px',
+                height: '30px',
+                cursor: 'pointer',
+                fontSize: '16px',
+                fontWeight: 'bold'
+              }}
+            >
+              ×
+            </button>
+            <InvoiceHTML lead={selectedLead} />
+          </div>
+        </div>
       )}
     </div>
   );
