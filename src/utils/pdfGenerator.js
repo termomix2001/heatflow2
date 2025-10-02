@@ -8,8 +8,8 @@ export const generateInvoicePDF = (lead) => {
     format: 'a4'
   });
 
-  doc.addFont('ArialMS', 'Arial', 'normal');
-  doc.setFont('Arial');
+  // Nastavení fontu pro české znaky
+  doc.setFont('helvetica');
   
   // Nastavení fontů a velikostí
   const primaryColor = '#F97316'; // HeatFlow oranžová
