@@ -169,7 +169,7 @@ const InvoiceHTML = ({ lead }) => {
 
       <div style={{ marginTop: '20px', textAlign: 'center' }}>
         <button 
-          onClick={() => exportovatFakturuJakoPDF('faktura-obsah')}
+          onClick={() => exportovatFakturuJakoPDF(lead)}
           style={{
             backgroundColor: '#F97316',
             color: 'white',
@@ -182,7 +182,7 @@ const InvoiceHTML = ({ lead }) => {
             boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
           }}
         >
-          Stáhnout PDF
+          Stáhnout PDF (Vysoká kvalita)
         </button>
       </div>
     </div>
