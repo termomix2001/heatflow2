@@ -8,7 +8,6 @@ import {
   FaFilter,
   FaCalendarAlt,
   FaUser,
-  FaBuilding,
   FaPhone,
   FaEnvelope,
   FaMapMarkerAlt
