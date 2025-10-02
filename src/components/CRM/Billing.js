@@ -13,6 +13,7 @@ import {
   FaEnvelope,
   FaMapMarkerAlt
 } from 'react-icons/fa';
+import { generateInvoicePDF } from '../../utils/pdfGenerator';
 
 const Billing = () => {
   const [leads, setLeads] = useState([]);
@@ -81,61 +82,13 @@ const Billing = () => {
 
   // Generování PDF faktury
   const generateInvoice = (lead) => {
-    // Simulace generování PDF
-    const invoiceData = {
-      customerName: lead.name,
-      customerCompany: lead.company,
-      customerAddress: lead.address,
-      customerEmail: lead.email,
-      customerPhone: lead.phone,
-      invoiceNumber: `HF-${new Date().getFullYear()}-${String(lead.id).padStart(4, '0')}`,
-      invoiceDate: new Date().toLocaleDateString('cs-CZ'),
-      dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toLocaleDateString('cs-CZ'),
-      amount: lead.value,
-      description: lead.description,
-      salesRep: lead.salesRep
-    };
-
-    // Vytvoření PDF obsahu (simulace)
-    const pdfContent = `
-FAKTURA
-Faktura číslo: ${invoiceData.invoiceNumber}
-Datum vystavení: ${invoiceData.invoiceDate}
-Datum splatnosti: ${invoiceData.dueDate}
-
-ODBĚRATEL:
-${invoiceData.customerName}
-${invoiceData.customerCompany}
-${invoiceData.customerAddress}
-Email: ${invoiceData.customerEmail}
-Tel: ${invoiceData.customerPhone}
-
-DODAVATEL:
-HeatFlow s.r.o.
-IČO: 12345678
-DIČ: CZ12345678
-Adresa: Praha 1, Václavské náměstí 1
-
-PŘEDMĚT:
-${invoiceData.description}
-
-ČÁSTKA: ${invoiceData.amount.toLocaleString('cs-CZ')} Kč
-DPH: ${Math.round(invoiceData.amount * 0.21).toLocaleString('cs-CZ')} Kč
-CELKEM: ${Math.round(invoiceData.amount * 1.21).toLocaleString('cs-CZ')} Kč
-
-Obchodní zástupce: ${invoiceData.salesRep}
-    `;
-
-    // Simulace stažení PDF
-    const blob = new Blob([pdfContent], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `faktura-${lead.name.replace(/\s+/g, '-')}-${invoiceData.invoiceNumber}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
+    try {
+      // Generování skutečné PDF faktury
+      generateInvoicePDF(lead);
+    } catch (error) {
+      console.error('Chyba při generování PDF:', error);
+      alert('Došlo k chybě při generování PDF faktury. Zkuste to prosím znovu.');
+    }
   };
 
   // Zobrazení detailu poptávky
