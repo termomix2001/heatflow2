@@ -27,78 +27,78 @@ export const generateInvoicePDF = (lead) => {
 
   // Logo a hlavička
   doc.setFillColor(220, 38, 38); // HeatFlow červená
-  doc.rect(0, 0, 210, 30, 'F');
+  doc.rect(0, 0, 210, 25, 'F');
   
   // Logo text
   doc.setTextColor(255, 255, 255);
-  doc.setFontSize(fontSize.title);
+  doc.setFontSize(16);
   doc.setFont('helvetica', 'bold');
-  doc.text('HeatFlow', 20, 20);
+  doc.text('HeatFlow', 20, 16);
   
   // Podtitul
   doc.setFontSize(fontSize.small);
   doc.setFont('helvetica', 'normal');
-  doc.text('Tepelná čerpadla a uhlíkové infra folie', 20, 25);
+  doc.text('Tepelná čerpadla a uhlíkové infra folie', 20, 21);
 
   // Faktura číslo a datum
   doc.setTextColor(0, 0, 0);
   doc.setFontSize(fontSize.header);
   doc.setFont('helvetica', 'bold');
-  doc.text('FAKTURA', 150, 20);
+  doc.text('FAKTURA', 150, 16);
   
   doc.setFontSize(fontSize.normal);
   doc.setFont('helvetica', 'normal');
-  doc.text(`Číslo faktury: ${invoiceNumber}`, 150, 30);
-  doc.text(`Datum vystavení: ${invoiceDate}`, 150, 35);
-  doc.text(`Datum splatnosti: ${dueDate}`, 150, 40);
+  doc.text(`Číslo faktury: ${invoiceNumber}`, 150, 26);
+  doc.text(`Datum vystavení: ${invoiceDate}`, 150, 31);
+  doc.text(`Datum splatnosti: ${dueDate}`, 150, 36);
 
   // Oddělovač
   doc.setDrawColor(220, 38, 38);
   doc.setLineWidth(0.5);
-  doc.line(20, 50, 190, 50);
+  doc.line(20, 45, 190, 45);
 
   // Odběratel
   doc.setFontSize(fontSize.header);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(primaryColor);
-  doc.text('ODBĚRATEL:', 20, 65);
+  doc.text('ODBĚRATEL:', 20, 60);
   
   doc.setFontSize(fontSize.normal);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(0, 0, 0);
-  doc.text(lead.name, 20, 75);
+  doc.text(lead.name, 20, 70);
   if (lead.company) {
-    doc.text(lead.company, 20, 80);
+    doc.text(lead.company, 20, 75);
   }
-  doc.text(lead.address, 20, 85);
-  doc.text(`Email: ${lead.email}`, 20, 90);
-  doc.text(`Tel: ${lead.phone}`, 20, 95);
+  doc.text(lead.address, 20, 80);
+  doc.text(`Email: ${lead.email}`, 20, 85);
+  doc.text(`Tel: ${lead.phone}`, 20, 90);
 
   // Dodavatel
   doc.setFontSize(fontSize.header);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(primaryColor);
-  doc.text('DODAVATEL:', 110, 65);
+  doc.text('DODAVATEL:', 110, 60);
   
   doc.setFontSize(fontSize.normal);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(0, 0, 0);
-  doc.text('HeatFlow s.r.o.', 110, 75);
-  doc.text('IČO: 12345678', 110, 80);
-  doc.text('DIČ: CZ12345678', 110, 85);
-  doc.text('Praha 1, Václavské náměstí 1', 110, 90);
-  doc.text('Email: info@heatflow.cz', 110, 95);
-  doc.text('Tel: +420 123 456 789', 110, 100);
+  doc.text('HeatFlow s.r.o.', 110, 70);
+  doc.text('IČO: 12345678', 110, 75);
+  doc.text('DIČ: CZ12345678', 110, 80);
+  doc.text('Praha 1, Václavské náměstí 1', 110, 85);
+  doc.text('Email: info@heatflow.cz', 110, 90);
+  doc.text('Tel: +420 123 456 789', 110, 95);
 
   // Oddělovač
   doc.setDrawColor(220, 38, 38);
-  doc.line(20, 110, 190, 110);
+  doc.line(20, 105, 190, 105);
 
   // Předmět faktury
   doc.setFontSize(fontSize.header);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(primaryColor);
-  doc.text('PŘEDMĚT FAKTURY:', 20, 125);
+  doc.text('PŘEDMĚT FAKTURY:', 20, 120);
   
   doc.setFontSize(fontSize.normal);
   doc.setFont('helvetica', 'normal');
@@ -108,10 +108,10 @@ export const generateInvoicePDF = (lead) => {
   const description = lead.description;
   const maxWidth = 170;
   const lines = doc.splitTextToSize(description, maxWidth);
-  doc.text(lines, 20, 135);
+  doc.text(lines, 20, 130);
 
   // Tabulka s částkami
-  const tableY = 155;
+  const tableY = 150;
   
   // Hlavička tabulky
   doc.setFillColor(248, 250, 252);
