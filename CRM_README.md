@@ -135,3 +135,4 @@ CRM je plně responzivní a funguje na:
 **CRM systém je připraven k použití!** 🚀
 
 Přihlaste se na `/crm` a začněte spravovat své obchodní procesy.
+
