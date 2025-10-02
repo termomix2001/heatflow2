@@ -8,18 +8,11 @@ export const generateInvoicePDF = (lead) => {
     format: 'a4'
   });
 
-  // Nastavení pro české znaky
-  doc.setLanguage('cs');
-  
-  // Funkce pro správné zobrazení českých znaků
-  const formatCzech = (text) => {
-    if (!text) return '';
-    return text;
-  };
+  doc.addFont('ArialMS', 'Arial', 'normal');
+  doc.setFont('Arial');
   
   // Nastavení fontů a velikostí
   const primaryColor = '#F97316'; // HeatFlow oranžová
-  const secondaryColor = '#6B7280'; // Šedá
   const fontSize = {
     title: 20,
     header: 14,
@@ -45,25 +38,21 @@ export const generateInvoicePDF = (lead) => {
   // Logo text
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(18);
-  doc.setFont('helvetica', 'bold');
   doc.text('HeatFlow', 20, 18);
   
   // Podtitul
   doc.setFontSize(9);
-  doc.setFont('helvetica', 'normal');
-  doc.text(formatCzech('Tepelná čerpadla a uhlíkové infra folie'), 20, 23);
+  doc.text('Tepelná čerpadla a uhlíkové infra folie', 20, 23);
 
   // Faktura číslo a datum
   doc.setTextColor(0, 0, 0);
   doc.setFontSize(16);
-  doc.setFont('helvetica', 'bold');
   doc.text('FAKTURA', 150, 18);
   
   doc.setFontSize(10);
-  doc.setFont('helvetica', 'normal');
-  doc.text(formatCzech(`Číslo faktury: ${invoiceNumber}`), 150, 28);
-  doc.text(formatCzech(`Datum vystavení: ${invoiceDate}`), 150, 33);
-  doc.text(formatCzech(`Datum splatnosti: ${dueDate}`), 150, 38);
+  doc.text(`Číslo faktury: ${invoiceNumber}`, 150, 28);
+  doc.text(`Datum vystavení: ${invoiceDate}`, 150, 33);
+  doc.text(`Datum splatnosti: ${dueDate}`, 150, 38);
 
   // Oddělovač
   doc.setDrawColor(249, 115, 22);
@@ -72,36 +61,32 @@ export const generateInvoicePDF = (lead) => {
 
   // Odběratel
   doc.setFontSize(12);
-  doc.setFont('helvetica', 'bold');
   doc.setTextColor(249, 115, 22);
   doc.text('ODBĚRATEL:', 20, 60);
   
   doc.setFontSize(10);
-  doc.setFont('helvetica', 'normal');
   doc.setTextColor(0, 0, 0);
-  doc.text(formatCzech(lead.name), 20, 70);
+  doc.text(lead.name, 20, 70);
   if (lead.company) {
-    doc.text(formatCzech(lead.company), 20, 75);
+    doc.text(lead.company, 20, 75);
   }
-  doc.text(formatCzech(lead.address), 20, 80);
-  doc.text(formatCzech(`Email: ${lead.email}`), 20, 85);
-  doc.text(formatCzech(`Tel: ${lead.phone}`), 20, 90);
+  doc.text(lead.address, 20, 80);
+  doc.text(`Email: ${lead.email}`, 20, 85);
+  doc.text(`Tel: ${lead.phone}`, 20, 90);
 
   // Dodavatel
   doc.setFontSize(12);
-  doc.setFont('helvetica', 'bold');
   doc.setTextColor(249, 115, 22);
   doc.text('DODAVATEL:', 110, 60);
   
   doc.setFontSize(10);
-  doc.setFont('helvetica', 'normal');
   doc.setTextColor(0, 0, 0);
-  doc.text(formatCzech('HeatFlow s.r.o.'), 110, 70);
-  doc.text(formatCzech('IČO: 12345678'), 110, 75);
-  doc.text(formatCzech('DIČ: CZ12345678'), 110, 80);
-  doc.text(formatCzech('Praha 1, Václavské náměstí 1'), 110, 85);
-  doc.text(formatCzech('Email: info@heatflow.cz'), 110, 90);
-  doc.text(formatCzech('Tel: +420 123 456 789'), 110, 95);
+  doc.text('HeatFlow s.r.o.', 110, 70);
+  doc.text('IČO: 12345678', 110, 75);
+  doc.text('DIČ: CZ12345678', 110, 80);
+  doc.text('Praha 1, Václavské náměstí 1', 110, 85);
+  doc.text('Email: info@heatflow.cz', 110, 90);
+  doc.text('Tel: +420 123 456 789', 110, 95);
 
   // Oddělovač
   doc.setDrawColor(249, 115, 22);
@@ -109,16 +94,14 @@ export const generateInvoicePDF = (lead) => {
 
   // Předmět faktury
   doc.setFontSize(12);
-  doc.setFont('helvetica', 'bold');
   doc.setTextColor(249, 115, 22);
   doc.text('PŘEDMĚT FAKTURY:', 20, 120);
   
   doc.setFontSize(10);
-  doc.setFont('helvetica', 'normal');
   doc.setTextColor(0, 0, 0);
   
   // Rozdělení dlouhého textu na řádky
-  const description = formatCzech(lead.description);
+  const description = lead.description;
   const maxWidth = 170;
   const lines = doc.splitTextToSize(description, maxWidth);
   doc.text(lines, 20, 130);
@@ -131,16 +114,14 @@ export const generateInvoicePDF = (lead) => {
   doc.rect(20, tableY, 170, 15, 'F');
   
   doc.setFontSize(10);
-  doc.setFont('helvetica', 'bold');
   doc.setTextColor(255, 255, 255);
-  doc.text(formatCzech('Popis'), 25, tableY + 10);
-  doc.text(formatCzech('Množství'), 100, tableY + 10);
-  doc.text(formatCzech('Cena za jednotku'), 130, tableY + 10);
-  doc.text(formatCzech('Celkem'), 160, tableY + 10);
+  doc.text('Popis', 25, tableY + 10);
+  doc.text('Množství', 100, tableY + 10);
+  doc.text('Cena za jednotku', 130, tableY + 10);
+  doc.text('Celkem', 160, tableY + 10);
 
   // Řádek s položkou
   doc.setFontSize(10);
-  doc.setFont('helvetica', 'normal');
   doc.setTextColor(0, 0, 0);
   doc.text(description, 25, tableY + 25);
   doc.text('1 ks', 100, tableY + 25);
@@ -150,20 +131,18 @@ export const generateInvoicePDF = (lead) => {
   // Součty
   const totalsY = tableY + 40;
   doc.setFontSize(10);
-  doc.setFont('helvetica', 'bold');
   doc.setTextColor(0, 0, 0);
-  doc.text(formatCzech('Mezisoučet:'), 130, totalsY);
-  doc.text(formatCzech(`${amount.toLocaleString('cs-CZ')} Kč`), 160, totalsY);
+  doc.text('Mezisoučet:', 130, totalsY);
+  doc.text(`${amount.toLocaleString('cs-CZ')} Kč`, 160, totalsY);
   
-  doc.text(formatCzech(`DPH (21%):`), 130, totalsY + 10);
-  doc.text(formatCzech(`${vatAmount.toLocaleString('cs-CZ')} Kč`), 160, totalsY + 10);
+  doc.text(`DPH (21%):`, 130, totalsY + 10);
+  doc.text(`${vatAmount.toLocaleString('cs-CZ')} Kč`, 160, totalsY + 10);
   
   // Celkem s rámečkem
   doc.setFillColor(249, 115, 22);
   doc.rect(125, totalsY + 15, 65, 15, 'F');
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(12);
-  doc.setFont('helvetica', 'bold');
   doc.text('CELKEM:', 130, totalsY + 25);
   doc.text(`${totalAmount.toLocaleString('cs-CZ')} Kč`, 160, totalsY + 25);
 
@@ -171,33 +150,29 @@ export const generateInvoicePDF = (lead) => {
   const paymentY = totalsY + 40;
   doc.setTextColor(0, 0, 0);
   doc.setFontSize(12);
-  doc.setFont('helvetica', 'bold');
   doc.setTextColor(249, 115, 22);
   doc.text('PLATEBNÍ ÚDAJE:', 20, paymentY);
   
   doc.setFontSize(10);
-  doc.setFont('helvetica', 'normal');
   doc.setTextColor(0, 0, 0);
-  doc.text(formatCzech('Číslo účtu: 123456789/0100'), 20, paymentY + 10);
-  doc.text(formatCzech('Banka: Komerční banka, a.s.'), 20, paymentY + 15);
-  doc.text(formatCzech('Variabilní symbol: ' + lead.id.toString().padStart(4, '0')), 20, paymentY + 20);
-  doc.text(formatCzech('Specifický symbol: ' + invoiceNumber.replace(/[^0-9]/g, '')), 20, paymentY + 25);
+  doc.text('Číslo účtu: 123456789/0100', 20, paymentY + 10);
+  doc.text('Banka: Komerční banka, a.s.', 20, paymentY + 15);
+  doc.text('Variabilní symbol: ' + lead.id.toString().padStart(4, '0'), 20, paymentY + 20);
+  doc.text('Specifický symbol: ' + invoiceNumber.replace(/[^0-9]/g, ''), 20, paymentY + 25);
 
   // Dodatečné informace
   doc.setFontSize(9);
-  doc.setFont('helvetica', 'normal');
   doc.setTextColor(0, 0, 0);
-  doc.text(formatCzech(`Obchodní zástupce: ${lead.salesRep}`), 20, paymentY + 35);
-  doc.text(formatCzech(`Datum vystavení: ${invoiceDate}`), 20, paymentY + 40);
-  doc.text(formatCzech(`Splatnost: ${dueDate}`), 20, paymentY + 45);
+  doc.text(`Obchodní zástupce: ${lead.salesRep}`, 20, paymentY + 35);
+  doc.text(`Datum vystavení: ${invoiceDate}`, 20, paymentY + 40);
+  doc.text(`Splatnost: ${dueDate}`, 20, paymentY + 45);
 
   // Podpis
   doc.setFontSize(10);
-  doc.setFont('helvetica', 'normal');
   doc.setTextColor(0, 0, 0);
-  doc.text(formatCzech('Podpis:'), 20, paymentY + 60);
+  doc.text('Podpis:', 20, paymentY + 60);
   doc.line(20, paymentY + 65, 80, paymentY + 65);
-  doc.text(formatCzech('Vystavil:'), 20, paymentY + 70);
+  doc.text('Vystavil:', 20, paymentY + 70);
 
   // Patička
   const footerY = 280;
@@ -205,11 +180,10 @@ export const generateInvoicePDF = (lead) => {
   doc.line(20, footerY, 190, footerY);
   
   doc.setFontSize(8);
-  doc.setFont('helvetica', 'normal');
   doc.setTextColor(107, 114, 128);
-  doc.text(formatCzech('HeatFlow s.r.o. | IČO: 12345678 | DIČ: CZ12345678'), 20, footerY + 10);
-  doc.text(formatCzech('Praha 1, Václavské náměstí 1 | Tel: +420 123 456 789 | Email: info@heatflow.cz'), 20, footerY + 15);
-  doc.text(formatCzech('www.heatflow.cz | Bankovní spojení: 123456789/0100'), 20, footerY + 20);
+  doc.text('HeatFlow s.r.o. | IČO: 12345678 | DIČ: CZ12345678', 20, footerY + 10);
+  doc.text('Praha 1, Václavské náměstí 1 | Tel: +420 123 456 789 | Email: info@heatflow.cz', 20, footerY + 15);
+  doc.text('www.heatflow.cz | Bankovní spojení: 123456789/0100', 20, footerY + 20);
 
   // Uložení PDF
   const fileName = `faktura-${lead.name.replace(/\s+/g, '-')}-${invoiceNumber}.pdf`;
