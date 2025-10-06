@@ -129,7 +129,7 @@ const Hero = () => {
           >
             <div className="relative">
               {/* Main video */}
-              <div className="w-full h-96 lg:h-[500px] shadow-2xl overflow-hidden rounded-xl bg-black flex items-center justify-center">
+              <div className="w-full h-[441px] lg:h-[575px] shadow-2xl overflow-hidden rounded-xl bg-black flex items-center justify-center">
                 <iframe
                   width="100%"
                   height="100%"
