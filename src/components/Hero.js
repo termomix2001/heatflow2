@@ -129,16 +129,16 @@ const Hero = () => {
           >
             <div className="relative">
               {/* Main video */}
-              <div className="w-full h-96 lg:h-[500px] shadow-2xl overflow-hidden rounded-xl">
+              <div className="w-full h-96 lg:h-[500px] shadow-2xl overflow-hidden rounded-xl bg-black flex items-center justify-center">
                 <iframe
                   width="100%"
                   height="100%"
-                  src="https://www.youtube.com/embed/LjiA2Eejrg4?autoplay=1&mute=1&loop=1&playlist=LjiA2Eejrg4&controls=0&showinfo=0&rel=0&modestbranding=1"
+                  src="https://www.youtube.com/embed/LjiA2Eejrg4?autoplay=1&mute=1&loop=1&playlist=LjiA2Eejrg4&controls=0&showinfo=0&rel=0&modestbranding=1&fs=1&wmode=transparent"
                   title="HeatFlow uhlíkové infra folie"
                   frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                   allowFullScreen
-                  className="w-full h-full object-cover"
+                  className="w-full h-full"
                 ></iframe>
               </div>
               
