@@ -76,3 +76,4 @@ Server je nakonfigurován pro komunikaci s React aplikací.
 - Server používá Puppeteer pro generování PDF
 - Všechny české znaky jsou podporovány
 - PDF je optimalizován pro tisk
+

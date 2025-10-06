@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import Services from './components/Services';
 import About from './components/About';
 import Projects from './components/Projects';
+import HeatingComparison from './components/HeatingComparison';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CRMApp from './components/CRM/CRMApp';
@@ -30,6 +31,7 @@ function App() {
         <Services />
         <About />
         <Projects />
+        <HeatingComparison />
         <Contact />
       </main>
       <Footer />

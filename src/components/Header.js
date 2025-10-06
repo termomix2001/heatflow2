@@ -19,6 +19,7 @@ const Header = () => {
     { name: 'Služby', href: '#services' },
     { name: 'O nás', href: '#about' },
     { name: 'Realizace', href: '#projects' },
+    { name: 'Srovnání', href: '#heating-comparison' },
     { name: 'Kontakt', href: '#contact' },
   ];
 
