@@ -15,6 +15,7 @@ import {
   FaMoon,
   FaSun
 } from 'react-icons/fa';
+import heatflowLogo from '../../heatflowlogo.png';
 import Dashboard from './Dashboard';
 import LeadsManagement from './LeadsManagement';
 import SalesPerformance from './SalesPerformance';
@@ -116,8 +117,12 @@ const CRMApp = () => {
       <div className={`w-64 shadow-2xl flex flex-col flex-shrink-0 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className={`flex items-center justify-between h-16 px-6 border-b ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">H</span>
+            <div className="w-10 h-10 flex items-center justify-center">
+              <img 
+                src={heatflowLogo} 
+                alt="HeatFlow Logo" 
+                className="w-full h-full object-contain"
+              />
             </div>
             <span className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>HeatFlow CRM</span>
           </div>

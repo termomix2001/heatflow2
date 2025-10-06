@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaBars, FaTimes, FaPhone, FaEnvelope } from 'react-icons/fa';
+import heatflowLogo from '../heatflowlogo.png';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -64,8 +65,12 @@ const Header = () => {
               whileHover={{ scale: 1.05 }}
               className="flex items-center space-x-3"
             >
-              <div className="w-10 h-10 bg-primary-800 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">H</span>
+              <div className="w-12 h-12 flex items-center justify-center">
+                <img 
+                  src={heatflowLogo} 
+                  alt="HeatFlow Logo" 
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-white">HeatFlow</h1>
