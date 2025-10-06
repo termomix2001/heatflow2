@@ -218,7 +218,7 @@ const HeatingComparison = () => {
             Parametry pro výpočet
           </h3>
           
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Velikost místnosti (m²)
@@ -227,7 +227,7 @@ const HeatingComparison = () => {
                 type="number"
                 value={roomSize}
                 onChange={(e) => setRoomSize(Number(e.target.value))}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
                 min="10"
                 max="200"
               />
@@ -235,13 +235,13 @@ const HeatingComparison = () => {
             
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Doba vytápění (hodin/den)
+                Doba vytápění (h/den)
               </label>
               <input
                 type="number"
                 value={heatingHours}
                 onChange={(e) => setHeatingHours(Number(e.target.value))}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
                 min="1"
                 max="24"
               />
@@ -255,7 +255,7 @@ const HeatingComparison = () => {
                 type="number"
                 value={electricityPrice}
                 onChange={(e) => setElectricityPrice(Number(e.target.value))}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
                 min="1"
                 max="10"
                 step="0.1"
@@ -265,7 +265,7 @@ const HeatingComparison = () => {
         </motion.div>
 
         {/* Comparison Results */}
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           {sortedHeatingTypes.map((heating, index) => {
             const costs = calculateCosts(heating);
             const isHeatFlow = heating.id === 'heatflow';
@@ -276,69 +276,60 @@ const HeatingComparison = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={{ delay: 0.3 + index * 0.1, duration: 0.6 }}
-                className={`rounded-2xl p-8 shadow-lg transition-all duration-300 hover:shadow-xl ${
+                className={`rounded-2xl p-6 shadow-lg transition-all duration-300 hover:shadow-xl ${
                   isHeatFlow 
                     ? 'bg-gradient-to-br from-orange-50 to-red-50 border-2 border-orange-200' 
                     : 'bg-white border border-gray-200'
                 }`}
               >
                 {/* Header */}
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center space-x-4">
-                    <div className={`w-16 h-16 rounded-xl flex items-center justify-center ${heating.bgColor}`}>
-                      <heating.icon className={`text-2xl ${heating.textColor}`} />
-                    </div>
-                    <div>
-                      <h3 className={`text-xl font-bold ${isHeatFlow ? 'text-orange-800' : 'text-gray-900'}`}>
-                        {heating.name}
-                      </h3>
-                      {isHeatFlow && (
-                        <div className="flex items-center text-orange-600 text-sm font-medium">
-                          <FaCheckCircle className="mr-1" />
-                          Doporučeno
-                        </div>
-                      )}
-                    </div>
+                <div className="text-center mb-6">
+                  <div className={`w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4 ${heating.bgColor}`}>
+                    <heating.icon className={`text-2xl ${heating.textColor}`} />
                   </div>
-                  
+                  <h3 className={`text-lg font-bold mb-2 ${isHeatFlow ? 'text-orange-800' : 'text-gray-900'}`}>
+                    {heating.name}
+                  </h3>
                   {isHeatFlow && (
-                    <div className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-semibold">
+                    <div className="flex items-center justify-center text-orange-600 text-sm font-medium mb-2">
+                      <FaCheckCircle className="mr-1" />
+                      Doporučeno
+                    </div>
+                  )}
+                  {isHeatFlow && (
+                    <div className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-semibold inline-block">
                       Nejvýhodnější
                     </div>
                   )}
                 </div>
 
                 {/* Cost Summary */}
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <div className="text-sm text-gray-600 mb-1">Instalace</div>
-                    <div className="text-2xl font-bold text-gray-900">
+                <div className="space-y-3 mb-6">
+                  <div className="bg-gray-50 rounded-lg p-3 text-center">
+                    <div className="text-xs text-gray-600 mb-1">Instalace</div>
+                    <div className="text-lg font-bold text-gray-900">
                       {costs.totalInstallationCost.toLocaleString()} Kč
                     </div>
                   </div>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <div className="text-sm text-gray-600 mb-1">Roční náklady</div>
-                    <div className="text-2xl font-bold text-gray-900">
+                  <div className="bg-gray-50 rounded-lg p-3 text-center">
+                    <div className="text-xs text-gray-600 mb-1">Roční náklady</div>
+                    <div className="text-lg font-bold text-gray-900">
                       {costs.totalYearlyCost.toLocaleString()} Kč
                     </div>
                   </div>
                 </div>
 
-                {/* Detailed Costs */}
-                <div className="space-y-3 mb-6">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Denní spotřeba:</span>
+                {/* Key Metrics */}
+                <div className="space-y-2 mb-6">
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-gray-600">Denní:</span>
                     <span className="font-semibold">{costs.dailyCost} Kč</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Měsíční náklady:</span>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-gray-600">Měsíčně:</span>
                     <span className="font-semibold">{costs.monthlyCost} Kč</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Údržba/rok:</span>
-                    <span className="font-semibold">{costs.yearlyMaintenance} Kč</span>
-                  </div>
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center text-sm">
                     <span className="text-gray-600">Návratnost:</span>
                     <span className="font-semibold">{costs.paybackPeriod} let</span>
                   </div>
@@ -351,16 +342,16 @@ const HeatingComparison = () => {
                 </div>
 
                 {/* Pros and Cons */}
-                <div className="space-y-4">
+                <div className="space-y-3">
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-2 flex items-center">
-                      <FaCheckCircle className="mr-2 text-green-500" />
+                    <h4 className="font-semibold text-gray-900 mb-2 text-sm flex items-center">
+                      <FaCheckCircle className="mr-1 text-green-500 text-xs" />
                       Výhody
                     </h4>
                     <ul className="space-y-1">
-                      {heating.pros.slice(0, 3).map((pro, proIndex) => (
-                        <li key={proIndex} className="text-sm text-gray-600 flex items-start">
-                          <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2 mt-2 flex-shrink-0"></div>
+                      {heating.pros.slice(0, 2).map((pro, proIndex) => (
+                        <li key={proIndex} className="text-xs text-gray-600 flex items-start">
+                          <div className="w-1 h-1 bg-green-500 rounded-full mr-2 mt-1.5 flex-shrink-0"></div>
                           {pro}
                         </li>
                       ))}
@@ -368,14 +359,14 @@ const HeatingComparison = () => {
                   </div>
                   
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-2 flex items-center">
-                      <FaExclamationTriangle className="mr-2 text-orange-500" />
+                    <h4 className="font-semibold text-gray-900 mb-2 text-sm flex items-center">
+                      <FaExclamationTriangle className="mr-1 text-orange-500 text-xs" />
                       Nevýhody
                     </h4>
                     <ul className="space-y-1">
-                      {heating.cons.map((con, conIndex) => (
-                        <li key={conIndex} className="text-sm text-gray-600 flex items-start">
-                          <div className="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2 mt-2 flex-shrink-0"></div>
+                      {heating.cons.slice(0, 2).map((con, conIndex) => (
+                        <li key={conIndex} className="text-xs text-gray-600 flex items-start">
+                          <div className="w-1 h-1 bg-orange-500 rounded-full mr-2 mt-1.5 flex-shrink-0"></div>
                           {con}
                         </li>
                       ))}
@@ -387,13 +378,13 @@ const HeatingComparison = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className={`w-full mt-6 py-3 px-4 rounded-lg font-semibold transition-colors ${
+                  className={`w-full mt-4 py-2 px-3 rounded-lg text-sm font-semibold transition-colors ${
                     isHeatFlow
                       ? 'bg-orange-600 hover:bg-orange-700 text-white'
                       : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
                   }`}
                 >
-                  {isHeatFlow ? 'Získat nabídku HeatFlow' : 'Získat více informací'}
+                  {isHeatFlow ? 'Získat nabídku' : 'Více info'}
                 </motion.button>
               </motion.div>
             );
@@ -416,29 +407,29 @@ const HeatingComparison = () => {
               rychlost, úspornost, zdravotní benefity a dlouhou životnost.
             </p>
             
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               <div className="text-center">
-                <div className="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <FaEuroSign className="text-2xl" />
+                <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <FaEuroSign className="text-xl" />
                 </div>
-                <h4 className="text-lg font-semibold mb-2">Nejnižší náklady</h4>
-                <p className="text-orange-100">Úspora až 60% oproti tradičnímu vytápění</p>
+                <h4 className="text-base font-semibold mb-2">Nejnižší náklady</h4>
+                <p className="text-orange-100 text-sm">Úspora až 60% oproti tradičnímu vytápění</p>
               </div>
               
               <div className="text-center">
-                <div className="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <FaHeart className="text-2xl" />
+                <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <FaHeart className="text-xl" />
                 </div>
-                <h4 className="text-lg font-semibold mb-2">Zdravotní benefity</h4>
-                <p className="text-orange-100">Infračervené záření prospívá zdraví</p>
+                <h4 className="text-base font-semibold mb-2">Zdravotní benefity</h4>
+                <p className="text-orange-100 text-sm">Infračervené záření prospívá zdraví</p>
               </div>
               
               <div className="text-center">
-                <div className="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <FaClock className="text-2xl" />
+                <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <FaClock className="text-xl" />
                 </div>
-                <h4 className="text-lg font-semibold mb-2">Okamžitý komfort</h4>
-                <p className="text-orange-100">Teplo za 2-3 minuty po zapnutí</p>
+                <h4 className="text-base font-semibold mb-2">Okamžitý komfort</h4>
+                <p className="text-orange-100 text-sm">Teplo za 2-3 minuty po zapnutí</p>
               </div>
             </div>
           </div>

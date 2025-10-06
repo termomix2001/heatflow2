@@ -56,18 +56,18 @@ const About = () => {
               O společnosti HeatFlow
             </div>
             
-            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
               Více než 15 let{' '}
               <span className="text-primary-500">zkušeností</span>
             </h2>
             
-            <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-300 mb-6 leading-relaxed">
               HeatFlow je přední česká společnost specializující se na instalaci, 
               servis a údržbu uhlíkových infra folií. Naše zkušenosti a odbornost 
               zaručují nejvyšší kvalitu služeb a spokojenost zákazníků.
             </p>
 
-            <p className="text-lg text-gray-300 mb-8 leading-relaxed">
+            <p className="text-base sm:text-lg text-gray-300 mb-8 leading-relaxed">
               Spolupracujeme s předními výrobci infra systémů a máme 
               certifikované techniky pro všechny typy instalací. Naším cílem 
               je poskytovat energeticky úsporná řešení, která šetří peníze 

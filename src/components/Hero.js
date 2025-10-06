@@ -40,7 +40,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-5xl lg:text-6xl font-bold text-white leading-tight"
+              className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight"
             >
               Moderní uhlíkové{' '}
               <span className="text-primary-500">infra folie</span>
@@ -52,7 +52,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
-              className="text-xl text-gray-300 leading-relaxed"
+              className="text-lg sm:text-xl text-gray-300 leading-relaxed"
             >
               Ušetřete až 60% nákladů na vytápění s našimi vysoce účinnými uhlíkovými infra foliemi. 
               Rychlá instalace, nízké provozní náklady a okamžitý komfort.
@@ -63,7 +63,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.8 }}
-              className="grid grid-cols-1 sm:grid-cols-3 gap-4"
+              className="grid grid-cols-1 sm:grid-cols-3 gap-3"
             >
               {features.map((feature, index) => (
                 <motion.div
@@ -71,7 +71,7 @@ const Hero = () => {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 1 + index * 0.2, duration: 0.5 }}
-                  className="flex items-center space-x-3 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                  className="flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
                 >
                   <feature.icon className="text-primary-600 text-xl" />
                   <span className="text-sm font-medium text-gray-700">{feature.text}</span>

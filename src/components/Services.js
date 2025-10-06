@@ -101,7 +101,7 @@ const Services = () => {
           
           <motion.h2
             variants={itemVariants}
-            className="text-4xl lg:text-5xl font-bold text-white mb-6"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6"
           >
             Kompletní řešení pro{' '}
             <span className="text-primary-500">infra vytápění</span>
@@ -109,7 +109,7 @@ const Services = () => {
           
           <motion.p
             variants={itemVariants}
-            className="text-xl text-gray-300 max-w-3xl mx-auto"
+            className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto"
           >
             Od návrhu a instalace až po servis a údržbu. Poskytujeme kompletní služby 
             pro uhlíkové infra folie a stropní panely všech typů a velikostí.
@@ -120,7 +120,7 @@ const Services = () => {
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={containerVariants}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {services.map((service, index) => (
             <motion.div

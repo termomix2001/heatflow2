@@ -98,12 +98,12 @@ const Projects = () => {
             Naše realizace
           </div>
           
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
             Úspěšné projekty{' '}
             <span className="text-primary-500">po celé ČR</span>
           </h2>
           
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+          <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-8">
             Podívejte se na naše nejnovější realizace uhlíkových infra folií. 
             Každý projekt je jedinečný a přizpůsobený konkrétním potřebám zákazníka.
           </p>
@@ -114,7 +114,7 @@ const Projects = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="flex flex-wrap justify-center gap-4 mb-12"
+          className="flex flex-wrap justify-center gap-3 mb-8"
         >
           {categories.map((category) => (
             <motion.button
@@ -122,7 +122,7 @@ const Projects = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setActiveCategory(category.id)}
-              className={`flex items-center space-x-2 px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+              className={`flex items-center space-x-2 px-4 py-2 rounded-full font-medium transition-all duration-300 text-sm ${
                 activeCategory === category.id
                   ? 'bg-primary-600 text-white shadow-lg'
                   : 'bg-white text-gray-700 hover:bg-primary-50 hover:text-primary-600'

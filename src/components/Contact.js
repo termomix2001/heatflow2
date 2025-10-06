@@ -106,18 +106,18 @@ const Contact = () => {
             Kontaktujte nás
           </div>
           
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
             Získejte{' '}
             <span className="text-primary-500">bezplatnou nabídku</span>
           </h2>
           
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto">
             Máte dotaz nebo chcete získat nabídku? Neváhejte nás kontaktovat. 
             Naši odborníci vám rádi pomohou s výběrem nejvhodnějšího řešení pro uhlíkové infra folie.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16">
           {/* Contact Information */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
