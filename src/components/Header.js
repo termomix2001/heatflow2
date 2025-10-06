@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaBars, FaTimes, FaPhone, FaEnvelope } from 'react-icons/fa';
-import heatflowLogo from '../heatflowlogo.png';
+import heatflowLogo from '../../heatflowlogo.png';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
