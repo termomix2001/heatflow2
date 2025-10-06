@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaArrowRight, FaCheckCircle, FaThermometerHalf, FaLeaf, FaEuroSign } from 'react-icons/fa';
-import heatflowImage from '../assets/heatflowfolie.avif';
 
 const Hero = () => {
   const features = [
@@ -129,13 +128,18 @@ const Hero = () => {
             className="relative"
           >
             <div className="relative">
-              {/* Main image */}
-              <div className="w-full h-96 lg:h-[500px] shadow-2xl overflow-hidden">
-                <img 
-                  src={heatflowImage} 
-                  alt="Uhlíkové infra folie HeatFlow" 
-                  className="w-full h-full object-contain"
-                />
+              {/* Main video */}
+              <div className="w-full h-96 lg:h-[500px] shadow-2xl overflow-hidden rounded-xl">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src="https://www.youtube.com/embed/LjiA2Eejrg4?autoplay=1&mute=1&loop=1&playlist=LjiA2Eejrg4&controls=0&showinfo=0&rel=0&modestbranding=1"
+                  title="HeatFlow uhlíkové infra folie"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full object-cover"
+                ></iframe>
               </div>
               
               {/* Floating cards */}
