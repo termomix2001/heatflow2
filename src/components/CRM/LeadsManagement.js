@@ -341,9 +341,6 @@ const LeadsManagement = ({ onEditLead }) => {
                     Klient
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Kontakt
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Stav
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -390,11 +387,6 @@ const LeadsManagement = ({ onEditLead }) => {
                     </td>
                     
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{lead.email}</div>
-                      <div className="text-sm text-gray-500">{lead.phone}</div>
-                    </td>
-                    
-                    <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center space-x-2">
                         {getStatusIcon(lead.status)}
                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(lead.status)}`}>
@@ -423,19 +415,14 @@ const LeadsManagement = ({ onEditLead }) => {
                           onClick={() => {
                             console.log('Opening modal for lead:', lead);
                             setSelectedLead(lead);
-                            setEditMode(false);
+                            setEditMode(true);
                             setShowModal(true);
                             console.log('Modal state:', showModal);
                           }}
                           className="text-primary-600 hover:text-primary-900 p-2"
+                          title="Upravit zakázku"
                         >
                           <FaEye />
-                        </button>
-                        <button 
-                          onClick={() => handleEditLead(lead)}
-                          className="text-gray-600 hover:text-gray-900 p-2"
-                        >
-                          <FaEdit />
                         </button>
                         <button className="text-red-600 hover:text-red-900 p-2">
                           <FaTrash />
@@ -466,7 +453,7 @@ const LeadsManagement = ({ onEditLead }) => {
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h2 className="text-2xl font-bold text-gray-900">
-                      {editMode ? 'Upravit poptávku' : 'Detail poptávky'}
+                      Upravit zakázku
                     </h2>
                     <p className="text-sm text-gray-500 mt-1">Číslo zakázky: {selectedLead.orderNumber}</p>
                   </div>
@@ -541,55 +528,39 @@ const LeadsManagement = ({ onEditLead }) => {
                     <div className="space-y-3">
                       <div>
                         <label className="text-sm font-medium text-gray-500">Jméno</label>
-                        {editMode ? (
-                          <input
-                            type="text"
-                            value={editForm.name}
-                            onChange={(e) => setEditForm({...editForm, name: e.target.value})}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                          />
-                        ) : (
-                          <p className="text-gray-900">{selectedLead.name}</p>
-                        )}
+                        <input
+                          type="text"
+                          value={editForm.name || selectedLead.name}
+                          onChange={(e) => setEditForm({...editForm, name: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        />
                       </div>
                       <div>
                         <label className="text-sm font-medium text-gray-500">Firma</label>
-                        {editMode ? (
-                          <input
-                            type="text"
-                            value={editForm.company}
-                            onChange={(e) => setEditForm({...editForm, company: e.target.value})}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                          />
-                        ) : (
-                          <p className="text-gray-900">{selectedLead.company}</p>
-                        )}
+                        <input
+                          type="text"
+                          value={editForm.company || selectedLead.company}
+                          onChange={(e) => setEditForm({...editForm, company: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        />
                       </div>
                       <div>
                         <label className="text-sm font-medium text-gray-500">Email</label>
-                        {editMode ? (
-                          <input
-                            type="email"
-                            value={editForm.email}
-                            onChange={(e) => setEditForm({...editForm, email: e.target.value})}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                          />
-                        ) : (
-                          <p className="text-gray-900">{selectedLead.email}</p>
-                        )}
+                        <input
+                          type="email"
+                          value={editForm.email || selectedLead.email}
+                          onChange={(e) => setEditForm({...editForm, email: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        />
                       </div>
                       <div>
                         <label className="text-sm font-medium text-gray-500">Telefon</label>
-                        {editMode ? (
-                          <input
-                            type="tel"
-                            value={editForm.phone}
-                            onChange={(e) => setEditForm({...editForm, phone: e.target.value})}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                          />
-                        ) : (
-                          <p className="text-gray-900">{selectedLead.phone}</p>
-                        )}
+                        <input
+                          type="tel"
+                          value={editForm.phone || selectedLead.phone}
+                          onChange={(e) => setEditForm({...editForm, phone: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        />
                       </div>
                     </div>
                   </div>
@@ -599,39 +570,26 @@ const LeadsManagement = ({ onEditLead }) => {
                     <div className="space-y-3">
                       <div>
                         <label className="text-sm font-medium text-gray-500">Stav</label>
-                        {editMode ? (
-                          <select
-                            value={editForm.status}
-                            onChange={(e) => setEditForm({...editForm, status: e.target.value})}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                          >
-                            {statuses.filter(s => s.value !== 'all').map(status => (
-                              <option key={status.value} value={status.value}>
-                                {status.label}
-                              </option>
-                            ))}
-                          </select>
-                        ) : (
-                          <div className="flex items-center space-x-2">
-                            {getStatusIcon(selectedLead.status)}
-                            <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(selectedLead.status)}`}>
-                              {selectedLead.status}
-                            </span>
-                          </div>
-                        )}
+                        <select
+                          value={editForm.status || selectedLead.status}
+                          onChange={(e) => setEditForm({...editForm, status: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        >
+                          {statuses.filter(s => s.value !== 'all').map(status => (
+                            <option key={status.value} value={status.value}>
+                              {status.label}
+                            </option>
+                          ))}
+                        </select>
                       </div>
                       <div>
                         <label className="text-sm font-medium text-gray-500">Hodnota</label>
-                        {editMode ? (
-                          <input
-                            type="number"
-                            value={editForm.value}
-                            onChange={(e) => setEditForm({...editForm, value: parseInt(e.target.value)})}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                          />
-                        ) : (
-                          <p className="text-gray-900 font-semibold">{selectedLead.value.toLocaleString()} Kč</p>
-                        )}
+                        <input
+                          type="number"
+                          value={editForm.value || selectedLead.value}
+                          onChange={(e) => setEditForm({...editForm, value: parseInt(e.target.value)})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        />
                       </div>
                       <div>
                         <label className="text-sm font-medium text-gray-500">Obchodník</label>
@@ -647,16 +605,12 @@ const LeadsManagement = ({ onEditLead }) => {
 
                 <div className="mt-6">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Poznámky</h3>
-                  {editMode ? (
-                    <textarea
-                      value={editForm.notes}
-                      onChange={(e) => setEditForm({...editForm, notes: e.target.value})}
-                      rows={4}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                    />
-                  ) : (
-                    <p className="text-gray-700 bg-gray-50 p-4 rounded-lg">{selectedLead.notes}</p>
-                  )}
+                  <textarea
+                    value={editForm.notes || selectedLead.notes}
+                    onChange={(e) => setEditForm({...editForm, notes: e.target.value})}
+                    rows={4}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  />
                 </div>
 
                 <div className="mt-6">
@@ -676,37 +630,22 @@ const LeadsManagement = ({ onEditLead }) => {
                 </div>
 
                 <div className="mt-6 flex justify-end space-x-4">
-                  {editMode ? (
-                    <>
-                      <button
-                        onClick={handleCancelEdit}
-                        className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
-                      >
-                        Zrušit
-                      </button>
-                      <button
-                        onClick={handleSaveEdit}
-                        className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"
-                      >
-                        Uložit
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <button
-                        onClick={() => setShowModal(false)}
-                        className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
-                      >
-                        Zavřít
-                      </button>
-                      <button
-                        onClick={() => handleEditLead(selectedLead)}
-                        className="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition-colors"
-                      >
-                        Upravit
-                      </button>
-                    </>
-                  )}
+                  <button
+                    onClick={() => {
+                      setShowModal(false);
+                      setEditMode(false);
+                      setEditForm({});
+                    }}
+                    className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+                  >
+                    Zrušit
+                  </button>
+                  <button
+                    onClick={handleSaveEdit}
+                    className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"
+                  >
+                    Uložit změny
+                  </button>
                 </div>
               </div>
             </div>
