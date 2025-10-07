@@ -412,13 +412,7 @@ const LeadsManagement = ({ onEditLead }) => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex items-center space-x-2">
                         <button
-                          onClick={() => {
-                            console.log('Opening modal for lead:', lead);
-                            setSelectedLead(lead);
-                            setEditMode(true);
-                            setShowModal(true);
-                            console.log('Modal state:', showModal);
-                          }}
+                          onClick={() => handleEditLead(lead)}
                           className="text-primary-600 hover:text-primary-900 p-2"
                           title="Upravit zakázku"
                         >

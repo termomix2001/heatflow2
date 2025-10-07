@@ -1,14 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FaArrowLeft, FaSave, FaTimes, FaUser, FaBuilding, FaEnvelope, FaPhone, FaCalendarAlt, FaDollarSign, FaStickyNote } from 'react-icons/fa';
+import { 
+  FaArrowLeft, 
+  FaSave, 
+  FaTimes, 
+  FaUser, 
+  FaBuilding, 
+  FaEnvelope, 
+  FaPhone, 
+  FaCalendarAlt, 
+  FaDollarSign, 
+  FaStickyNote,
+  FaCheckCircle,
+  FaFileInvoice,
+  FaHeart,
+  FaChartLine,
+  FaComments,
+  FaFileAlt,
+  FaCogs
+} from 'react-icons/fa';
 import Notification from './Notification';
 import useNotification from './useNotification';
+import OverviewTab from './tabs/OverviewTab';
+import ClientTab from './tabs/ClientTab';
+import CommunicationTab from './tabs/CommunicationTab';
+import DocumentsTab from './tabs/DocumentsTab';
+import ActivitiesTab from './tabs/ActivitiesTab';
+import BusinessTab from './tabs/BusinessTab';
+import TechnicalTab from './tabs/TechnicalTab';
 
 const EditLead = ({ onBack }) => {
   const { notification, showSuccess, showError, hideNotification } = useNotification();
   
   const [lead, setLead] = useState({
     id: 1,
+    orderNumber: 'HF00001',
     name: 'Jan Novák',
     company: 'Novák s.r.o.',
     email: 'jan.novak@email.cz',
@@ -19,11 +45,28 @@ const EditLead = ({ onBack }) => {
     salesRep: 'Petr Svoboda',
     notes: 'Zájem o uhlíkové infra folie pro rodinný dům',
     source: 'Webový formulář',
-    nextAction: 'Zavolat zítra v 10:00'
+    nextAction: 'Zavolat zítra v 10:00',
+    documents: {
+      contract: 'signed',
+      workContract: 'pending',
+      invoice: 'rejected'
+    }
   });
 
   const [formData, setFormData] = useState(lead);
   const [isLoading, setIsLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('overview');
+
+  // Definice záložek
+  const tabs = [
+    { id: 'overview', label: 'Přehled', icon: FaChartLine },
+    { id: 'client', label: 'Klient', icon: FaUser },
+    { id: 'communication', label: 'Komunikace', icon: FaComments },
+    { id: 'documents', label: 'Dokumenty', icon: FaFileAlt },
+    { id: 'activities', label: 'Aktivity', icon: FaCalendarAlt },
+    { id: 'business', label: 'Obchodní', icon: FaDollarSign },
+    { id: 'technical', label: 'Technické', icon: FaCogs }
+  ];
 
   const statuses = [
     { value: 'Akvizice', label: 'Akvizice', color: 'bg-blue-100 text-blue-800' },
@@ -32,6 +75,55 @@ const EditLead = ({ onBack }) => {
     { value: 'Energetická studie', label: 'Energetická studie', color: 'bg-purple-100 text-purple-800' },
     { value: 'Uzavřeno', label: 'Uzavřeno', color: 'bg-green-100 text-green-800' }
   ];
+
+  // Funkce pro status dokumentů
+  const getDocumentStatusIcon = (status) => {
+    switch (status) {
+      case 'signed':
+        return <FaCheckCircle className="text-green-500" />;
+      case 'pending':
+        return <span className="text-gray-400">-</span>;
+      case 'rejected':
+        return <FaTimes className="text-red-500" />;
+      default:
+        return <span className="text-gray-400">-</span>;
+    }
+  };
+
+  const getDocumentStatusColor = (status) => {
+    switch (status) {
+      case 'signed':
+        return 'text-green-600 bg-green-50';
+      case 'pending':
+        return 'text-gray-600 bg-gray-50';
+      case 'rejected':
+        return 'text-red-600 bg-red-50';
+      default:
+        return 'text-gray-600 bg-gray-50';
+    }
+  };
+
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case 'Akvizice':
+        return <FaPhone className="text-blue-500" />;
+      case 'Schůzka':
+        return <FaCalendarAlt className="text-yellow-500" />;
+      case 'Nabídka':
+        return <FaEnvelope className="text-orange-500" />;
+      case 'Energetická studie':
+        return <FaCheckCircle className="text-purple-500" />;
+      case 'Uzavřeno':
+        return <FaCheckCircle className="text-green-500" />;
+      default:
+        return <FaPhone className="text-gray-500" />;
+    }
+  };
+
+  const getStatusColor = (status) => {
+    const statusObj = statuses.find(s => s.value === status);
+    return statusObj ? statusObj.color : 'bg-gray-100 text-gray-800';
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -106,8 +198,8 @@ const EditLead = ({ onBack }) => {
                 <span>Zpět</span>
               </button>
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Upravit poptávku</h1>
-                <p className="text-gray-600">Úprava informací o poptávce</p>
+                <h1 className="text-3xl font-bold text-gray-900">Upravit zakázku</h1>
+                <p className="text-gray-600">Číslo zakázky: {lead.orderNumber}</p>
               </div>
             </div>
             
@@ -139,208 +231,50 @@ const EditLead = ({ onBack }) => {
           </div>
         </motion.div>
 
-        {/* Form */}
+        {/* Tabs Navigation */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="bg-white rounded-xl shadow-lg mb-6"
+        >
+          <div className="border-b border-gray-200">
+            <nav className="flex space-x-8 px-6" aria-label="Tabs">
+              {tabs.map((tab) => {
+                const Icon = tab.icon;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`${
+                      activeTab === tab.id
+                        ? 'border-primary-500 text-primary-600'
+                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center space-x-2 transition-colors`}
+                  >
+                    <Icon className="w-4 h-4" />
+                    <span>{tab.label}</span>
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
+        </motion.div>
+
+        {/* Tab Content */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
           className="bg-white rounded-xl shadow-lg p-8"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Left Column - Client Info */}
-            <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
-                <FaUser className="mr-2 text-primary-600" />
-                Informace o klientovi
-              </h2>
-              
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Jméno a příjmení *
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                    placeholder="Jan Novák"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Firma *
-                  </label>
-                  <input
-                    type="text"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                    placeholder="Novák s.r.o."
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email *
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                    placeholder="jan.novak@email.cz"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Telefon *
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                    placeholder="+420 123 456 789"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column - Business Info */}
-            <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
-                <FaBuilding className="mr-2 text-primary-600" />
-                Obchodní informace
-              </h2>
-              
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Stav poptávky *
-                  </label>
-                  <select
-                    name="status"
-                    value={formData.status}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  >
-                    {statuses.map(status => (
-                      <option key={status.value} value={status.value}>
-                        {status.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Hodnota obchodu (Kč) *
-                  </label>
-                  <input
-                    type="number"
-                    name="value"
-                    value={formData.value}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                    placeholder="150000"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Obchodník
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.salesRep}
-                    disabled
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Zdroj
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.source}
-                    disabled
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-500"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Full Width - Notes and Next Action */}
-          <div className="mt-8 pt-8 border-t border-gray-200">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
-                  <FaStickyNote className="mr-2 text-primary-600" />
-                  Poznámky
-                </label>
-                <textarea
-                  name="notes"
-                  value={formData.notes}
-                  onChange={handleInputChange}
-                  rows={4}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  placeholder="Zájem o uhlíkové infra folie pro rodinný dům..."
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
-                  <FaCalendarAlt className="mr-2 text-primary-600" />
-                  Další akce
-                </label>
-                <input
-                  type="text"
-                  name="nextAction"
-                  value={formData.nextAction}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  placeholder="Zavolat zítra v 10:00"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex justify-end space-x-4 mt-8 pt-8 border-t border-gray-200">
-            <button
-              onClick={handleCancel}
-              className="px-6 py-3 text-gray-600 hover:text-gray-800 transition-colors"
-            >
-              Zrušit
-            </button>
-            <button
-              onClick={handleSave}
-              disabled={isLoading}
-              className="bg-primary-600 text-white px-8 py-3 rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 flex items-center space-x-2"
-            >
-              {isLoading ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  <span>Ukládání...</span>
-                </>
-              ) : (
-                <>
-                  <FaSave />
-                  <span>Uložit změny</span>
-                </>
-              )}
-            </button>
-          </div>
+          {activeTab === 'overview' && <OverviewTab formData={formData} />}
+          {activeTab === 'client' && <ClientTab formData={formData} onInputChange={handleInputChange} />}
+          {activeTab === 'communication' && <CommunicationTab formData={formData} />}
+          {activeTab === 'documents' && <DocumentsTab formData={formData} />}
+          {activeTab === 'activities' && <ActivitiesTab formData={formData} />}
+          {activeTab === 'business' && <BusinessTab formData={formData} onInputChange={handleInputChange} />}
+          {activeTab === 'technical' && <TechnicalTab formData={formData} />}
         </motion.div>
       </div>
       
