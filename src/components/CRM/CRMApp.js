@@ -80,7 +80,6 @@ const CRMApp = () => {
     { id: 'performance', label: 'Výkonnost', icon: FaChartLine },
     { id: 'team', label: 'Tým', icon: FaUsers },
     { id: 'calendar', label: 'Kalendář', icon: FaCalendarAlt },
-    { id: 'edit-lead', label: 'Upravit poptávku', icon: FaEdit },
     { id: 'settings', label: 'Nastavení', icon: FaCog }
   ];
 

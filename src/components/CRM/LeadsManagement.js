@@ -50,11 +50,17 @@ const LeadsManagement = ({ onEditLead }) => {
     { id: 4, name: 'Energetická studie', description: 'Volitelná energetická studie', icon: FaCheckCircle }
   ];
 
+  // Generování čísla zakázky
+  const generateOrderNumber = (id) => {
+    return `HF${String(id).padStart(5, '0')}`;
+  };
+
   // Simulace dat
   useEffect(() => {
     const mockLeads = [
       {
         id: 1,
+        orderNumber: 'HF00001',
         name: 'Jan Novák',
         company: 'Novák s.r.o.',
         email: 'jan.novak@email.cz',
@@ -65,10 +71,16 @@ const LeadsManagement = ({ onEditLead }) => {
         salesRep: 'Petr Svoboda',
         notes: 'Zájem o uhlíkové infra folie pro rodinný dům',
         source: 'Webový formulář',
-        nextAction: 'Zavolat zítra v 10:00'
+        nextAction: 'Zavolat zítra v 10:00',
+        documents: {
+          contract: 'signed', // signed, pending, rejected
+          workContract: 'pending',
+          invoice: 'rejected'
+        }
       },
       {
         id: 2,
+        orderNumber: 'HF00002',
         name: 'Marie Svobodová',
         company: 'Svobodová a.s.',
         email: 'marie.svobodova@email.cz',
@@ -79,10 +91,16 @@ const LeadsManagement = ({ onEditLead }) => {
         salesRep: 'Anna Nováková',
         notes: 'Schůzka naplánována na 20.1.2024',
         source: 'Doporučení',
-        nextAction: 'Připravit prezentaci'
+        nextAction: 'Připravit prezentaci',
+        documents: {
+          contract: 'pending',
+          workContract: 'pending',
+          invoice: 'pending'
+        }
       },
       {
         id: 3,
+        orderNumber: 'HF00003',
         name: 'Tomáš Dvořák',
         company: 'Dvořák s.r.o.',
         email: 'tomas.dvorak@email.cz',
@@ -93,10 +111,16 @@ const LeadsManagement = ({ onEditLead }) => {
         salesRep: 'Petr Svoboda',
         notes: 'Nabídka odeslána, čekáme na odpověď',
         source: 'Webový formulář',
-        nextAction: 'Sledovat stav nabídky'
+        nextAction: 'Sledovat stav nabídky',
+        documents: {
+          contract: 'signed',
+          workContract: 'signed',
+          invoice: 'pending'
+        }
       },
       {
         id: 4,
+        orderNumber: 'HF00004',
         name: 'Jana Procházková',
         company: 'Procházková s.r.o.',
         email: 'jana.prochazkova@email.cz',
@@ -107,10 +131,16 @@ const LeadsManagement = ({ onEditLead }) => {
         salesRep: 'Anna Nováková',
         notes: 'Energetická studie v procesu',
         source: 'Telefonický kontakt',
-        nextAction: 'Dokončit studii'
+        nextAction: 'Dokončit studii',
+        documents: {
+          contract: 'signed',
+          workContract: 'signed',
+          invoice: 'signed'
+        }
       },
       {
         id: 5,
+        orderNumber: 'HF00005',
         name: 'Pavel Hruška',
         company: 'Hruška a.s.',
         email: 'pavel.hruska@email.cz',
@@ -121,7 +151,12 @@ const LeadsManagement = ({ onEditLead }) => {
         salesRep: 'Jana Procházková',
         notes: 'Obchod úspěšně uzavřen',
         source: 'Webový formulář',
-        nextAction: 'Instalace naplánována'
+        nextAction: 'Instalace naplánována',
+        documents: {
+          contract: 'signed',
+          workContract: 'signed',
+          invoice: 'signed'
+        }
       }
     ];
     
@@ -205,6 +240,33 @@ const LeadsManagement = ({ onEditLead }) => {
     return new Date(dateString).toLocaleDateString('cs-CZ');
   };
 
+  // Funkce pro status dokumentů
+  const getDocumentStatusIcon = (status) => {
+    switch (status) {
+      case 'signed':
+        return <FaCheckCircle className="text-green-500" />;
+      case 'pending':
+        return <span className="text-gray-400">-</span>;
+      case 'rejected':
+        return <FaTimes className="text-red-500" />;
+      default:
+        return <span className="text-gray-400">-</span>;
+    }
+  };
+
+  const getDocumentStatusColor = (status) => {
+    switch (status) {
+      case 'signed':
+        return 'text-green-600 bg-green-50';
+      case 'pending':
+        return 'text-gray-600 bg-gray-50';
+      case 'rejected':
+        return 'text-red-600 bg-red-50';
+      default:
+        return 'text-gray-600 bg-gray-50';
+    }
+  };
+
   return (
     <div className="h-full p-4 lg:p-6 overflow-auto">
       <div className="max-w-7xl mx-auto h-full">
@@ -272,6 +334,9 @@ const LeadsManagement = ({ onEditLead }) => {
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Číslo zakázky
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Klient
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -303,6 +368,12 @@ const LeadsManagement = ({ onEditLead }) => {
                     transition={{ delay: 0.3 + index * 0.05 }}
                     className="hover:bg-gray-50 transition-colors"
                   >
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-primary-600">
+                        {lead.orderNumber}
+                      </div>
+                    </td>
+                    
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center mr-4">
@@ -392,9 +463,12 @@ const LeadsManagement = ({ onEditLead }) => {
             >
               <div className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-gray-900">
-                    {editMode ? 'Upravit poptávku' : 'Detail poptávky'}
-                  </h2>
+                  <div>
+                    <h2 className="text-2xl font-bold text-gray-900">
+                      {editMode ? 'Upravit poptávku' : 'Detail poptávky'}
+                    </h2>
+                    <p className="text-sm text-gray-500 mt-1">Číslo zakázky: {selectedLead.orderNumber}</p>
+                  </div>
                   <button
                     onClick={() => {
                       setShowModal(false);
@@ -404,6 +478,60 @@ const LeadsManagement = ({ onEditLead }) => {
                   >
                     <FaTimes className="text-xl" />
                   </button>
+                </div>
+
+                {/* Status Bar */}
+                <div className="bg-gray-50 rounded-lg p-4 mb-6">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-sm font-medium text-gray-700">Aktuální fáze:</span>
+                      <div className="flex items-center space-x-2">
+                        {getStatusIcon(selectedLead.status)}
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(selectedLead.status)}`}>
+                          {selectedLead.status}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      {selectedLead.date}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Documents Section */}
+                <div className="bg-white border border-gray-200 rounded-lg p-4 mb-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Dokumenty</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <FaFileInvoice className="text-blue-500" />
+                        <span className="text-sm font-medium text-gray-700">Smlouva</span>
+                      </div>
+                      <div className={`px-2 py-1 rounded-full text-xs font-medium ${getDocumentStatusColor(selectedLead.documents.contract)}`}>
+                        {getDocumentStatusIcon(selectedLead.documents.contract)}
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <FaFileInvoice className="text-green-500" />
+                        <span className="text-sm font-medium text-gray-700">Smlouva o dílo</span>
+                      </div>
+                      <div className={`px-2 py-1 rounded-full text-xs font-medium ${getDocumentStatusColor(selectedLead.documents.workContract)}`}>
+                        {getDocumentStatusIcon(selectedLead.documents.workContract)}
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <FaFileInvoice className="text-purple-500" />
+                        <span className="text-sm font-medium text-gray-700">Faktura</span>
+                      </div>
+                      <div className={`px-2 py-1 rounded-full text-xs font-medium ${getDocumentStatusColor(selectedLead.documents.invoice)}`}>
+                        {getDocumentStatusIcon(selectedLead.documents.invoice)}
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
