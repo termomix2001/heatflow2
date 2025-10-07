@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { AuthProvider } from './contexts/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Services from './components/Services';
@@ -20,7 +22,13 @@ function App() {
   }, []);
 
   if (showCRM) {
-    return <CRMApp />;
+    return (
+      <AuthProvider>
+        <ProtectedRoute>
+          <CRMApp />
+        </ProtectedRoute>
+      </AuthProvider>
+    );
   }
 
   return (

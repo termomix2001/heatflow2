@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaUser, FaLock, FaEye, FaEyeSlash, FaSignInAlt } from 'react-icons/fa';
+import { useAuth } from '../../contexts/AuthContext';
 
-const Login = ({ onLogin }) => {
+const Login = () => {
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -27,21 +29,21 @@ const Login = ({ onLogin }) => {
     // Simulace přihlášení
     setTimeout(() => {
       if (formData.email === 'admin@heatflow.cz' && formData.password === 'admin123') {
-        onLogin({
+        login({
           id: 1,
           name: 'Administrátor',
           email: 'admin@heatflow.cz',
           role: 'admin'
         });
       } else if (formData.email === 'petr@heatflow.cz' && formData.password === 'petr123') {
-        onLogin({
+        login({
           id: 2,
           name: 'Petr Svoboda',
           email: 'petr@heatflow.cz',
           role: 'sales'
         });
       } else if (formData.email === 'anna@heatflow.cz' && formData.password === 'anna123') {
-        onLogin({
+        login({
           id: 3,
           name: 'Anna Nováková',
           email: 'anna@heatflow.cz',

@@ -17,7 +17,8 @@ import {
   FaExclamationTriangle,
   FaArrowRight,
   FaArrowLeft,
-  FaTimes
+  FaTimes,
+  FaFileInvoice
 } from 'react-icons/fa';
 import Notification from './Notification';
 import useNotification from './useNotification';

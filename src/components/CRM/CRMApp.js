@@ -16,16 +16,17 @@ import {
   FaSun
 } from 'react-icons/fa';
 import heatflowLogo from '../../heatflowlogo.png';
+import { useAuth } from '../../contexts/AuthContext';
+import SessionTimeout from '../SessionTimeout';
 import Dashboard from './Dashboard';
 import LeadsManagement from './LeadsManagement';
 import SalesPerformance from './SalesPerformance';
 import CalendarComponent from './Calendar';
 import EditLead from './EditLead';
 import Billing from './Billing';
-import Login from './Login';
 
 const CRMApp = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const { user, logout } = useAuth();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -56,12 +57,8 @@ const CRMApp = () => {
     setIsDarkMode(!isDarkMode);
   };
 
-  const handleLogin = (user) => {
-    setCurrentUser(user);
-  };
-
   const handleLogout = () => {
-    setCurrentUser(null);
+    logout();
     setActiveTab('dashboard');
   };
 
@@ -106,12 +103,9 @@ const CRMApp = () => {
     }
   };
 
-  if (!currentUser) {
-    return <Login onLogin={handleLogin} />;
-  }
-
   return (
     <div className={`flex h-screen w-full crm-container ${isDarkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
+      <SessionTimeout />
       {/* Sidebar */}
       <div className={`w-64 shadow-2xl flex flex-col flex-shrink-0 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className={`flex items-center justify-between h-16 px-6 border-b ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
@@ -166,8 +160,8 @@ const CRMApp = () => {
               <FaUser className={isDarkMode ? 'text-white' : 'text-primary-600'} />
             </div>
             <div>
-              <p className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{currentUser.name}</p>
-              <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{currentUser.email}</p>
+              <p className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{user.name}</p>
+              <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{user.email}</p>
             </div>
           </div>
           
@@ -240,11 +234,11 @@ const CRMApp = () => {
             
             <div className="flex items-center space-x-4">
               <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                Vítejte, {currentUser.name}
+                Vítejte, {user.name}
               </div>
               <div className={`w-8 h-8 rounded-full flex items-center justify-center ${isDarkMode ? 'bg-primary-600' : 'bg-primary-100'}`}>
                 <span className={`font-semibold text-sm ${isDarkMode ? 'text-white' : 'text-primary-600'}`}>
-                  {currentUser.name.split(' ').map(n => n[0]).join('')}
+                  {user.name.split(' ').map(n => n[0]).join('')}
                 </span>
               </div>
             </div>
