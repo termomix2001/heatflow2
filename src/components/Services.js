@@ -103,16 +103,15 @@ const Services = () => {
             variants={itemVariants}
             className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6"
           >
-            Kompletní řešení pro{' '}
-            <span className="text-primary-500">infra vytápění</span>
+            Kompletní řešení na klíč pro{' '}
+            <span className="text-primary-500">pohodlné vytápění</span>
           </motion.h2>
           
           <motion.p
             variants={itemVariants}
             className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto"
           >
-            Od návrhu a instalace až po servis a údržbu. Poskytujeme kompletní služby 
-            pro uhlíkové infra folie a stropní panely všech typů a velikostí.
+            Od návrhu a instalace až po servis a poradenství.
           </motion.p>
         </motion.div>
 
